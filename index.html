@@ -211,7 +211,16 @@ a { color: inherit; text-decoration: none; }
 /* ══════════════════════════════════════
    SECTION
 ══════════════════════════════════════ */
-.section { margin-bottom: 64px; }
+.section {
+  margin-bottom: 64px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .section-header {
   display: flex;
@@ -756,6 +765,18 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <script>
+// 섹션 페이드인
+const sections = document.querySelectorAll('.section');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      fadeObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+sections.forEach(s => fadeObserver.observe(s));
+
 // 네비게이션 활성화
 const navItems = document.querySelectorAll('.nav-item');
 const navObserver = new IntersectionObserver((entries) => {
