@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>정윤서 · Backend Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════
@@ -26,7 +27,6 @@
   --tag-text:  #37352F;
   --mono:      'DM Mono', monospace;
   --sans:      'Noto Sans KR', sans-serif;
-  --max:       760px;
   --side:      240px;
 }
 
@@ -56,8 +56,7 @@ a { color: inherit; text-decoration: none; }
   width: var(--side);
   flex-shrink: 0;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   height: 100vh;
   padding: 40px 20px 40px 28px;
   border-right: 1px solid var(--border);
@@ -123,7 +122,6 @@ a { color: inherit; text-decoration: none; }
   transition: color 0.15s;
 }
 .sidebar-link:hover { color: var(--text); }
-.sidebar-link svg { flex-shrink: 0; }
 
 /* ── 메인 콘텐츠 ── */
 .main {
@@ -153,10 +151,10 @@ a { color: inherit; text-decoration: none; }
 }
 @keyframes wave {
   0%,60%,100% { transform: rotate(0deg); }
-  10%,30% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  40% { transform: rotate(-4deg); }
-  50% { transform: rotate(10deg); }
+  10%,30%     { transform: rotate(14deg); }
+  20%          { transform: rotate(-8deg); }
+  40%          { transform: rotate(-4deg); }
+  50%          { transform: rotate(10deg); }
 }
 
 .hero-name {
@@ -167,9 +165,8 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.1;
   margin-bottom: 6px;
 }
-.hero-name span {
-  color: var(--accent);
-}
+.hero-name span { color: var(--accent); }
+
 .hero-sub {
   font-size: 16px;
   color: var(--text2);
@@ -214,13 +211,7 @@ a { color: inherit; text-decoration: none; }
 /* ══════════════════════════════════════
    SECTION
 ══════════════════════════════════════ */
-.section {
-  margin-bottom: 64px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.section.visible { opacity: 1; transform: none; }
+.section { margin-bottom: 64px; }
 
 .section-header {
   display: flex;
@@ -301,11 +292,8 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--mono);
   margin-bottom: 10px;
 }
-.skill-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
+.skill-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+
 .chip {
   font-size: 13px;
   font-weight: 500;
@@ -316,20 +304,9 @@ a { color: inherit; text-decoration: none; }
   cursor: default;
 }
 .chip:hover { transform: translateY(-1px); }
-.chip-primary {
-  background: var(--text);
-  color: #fff;
-}
-.chip-secondary {
-  background: var(--tag-bg);
-  color: var(--tag-text);
-  border: 1px solid var(--border);
-}
-.chip-learning {
-  background: #fff;
-  color: var(--text3);
-  border: 1.5px dashed var(--border);
-}
+.chip-primary  { background: var(--text); color: #fff; }
+.chip-secondary { background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--border); }
+.chip-learning  { background: #fff; color: var(--text3); border: 1.5px dashed var(--border); }
 
 /* ══════════════════════════════════════
    CAREER
@@ -351,7 +328,6 @@ a { color: inherit; text-decoration: none; }
   padding: 24px 26px;
   margin-bottom: 16px;
   transition: box-shadow 0.2s, border-color 0.2s;
-  background: var(--bg);
 }
 .project-card:hover {
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
@@ -390,14 +366,12 @@ a { color: inherit; text-decoration: none; }
   color: var(--accent);
   font-family: var(--mono);
 }
-
 .proj-stack {
   font-size: 12px;
   color: var(--text3);
   font-family: var(--mono);
   margin-bottom: 14px;
 }
-
 .proj-kpis {
   display: flex;
   flex-wrap: wrap;
@@ -413,13 +387,7 @@ a { color: inherit; text-decoration: none; }
   padding: 3px 10px;
   border-radius: 4px;
 }
-
-.proj-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
+.proj-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
 .proj-list li {
   font-size: 14px;
   color: var(--text2);
@@ -442,7 +410,6 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 24px 26px;
-  background: var(--bg);
   transition: box-shadow 0.2s, border-color 0.2s;
 }
 .side-card:hover {
@@ -455,16 +422,8 @@ a { color: inherit; text-decoration: none; }
   align-items: flex-start;
   margin-bottom: 6px;
 }
-.side-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.3px;
-}
-.side-links {
-  display: flex;
-  gap: 10px;
-}
+.side-title { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+.side-links { display: flex; gap: 10px; }
 .side-link {
   font-size: 12px;
   font-family: var(--mono);
@@ -498,14 +457,9 @@ a { color: inherit; text-decoration: none; }
   padding: 14px 16px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg);
   transition: background 0.15s, border-color 0.15s;
-  cursor: default;
 }
-.contact-item:hover {
-  background: var(--bg2);
-  border-color: #D0D0CE;
-}
+.contact-item:hover { background: var(--bg2); border-color: #D0D0CE; }
 .contact-icon {
   width: 32px; height: 32px;
   background: var(--bg2);
@@ -523,11 +477,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   display: block;
 }
-.contact-val {
-  font-size: 13.5px;
-  color: var(--text);
-  font-weight: 600;
-}
+.contact-val { font-size: 13.5px; color: var(--text); font-weight: 600; }
 
 /* ══════════════════════════════════════
    FOOTER
@@ -563,21 +513,11 @@ a { color: inherit; text-decoration: none; }
     <div class="sidebar-role">Backend Developer</div>
 
     <nav class="nav">
-      <a class="nav-item active" href="#about">
-        <span class="nav-dot"></span> About Me
-      </a>
-      <a class="nav-item" href="#skills">
-        <span class="nav-dot"></span> Skills
-      </a>
-      <a class="nav-item" href="#career">
-        <span class="nav-dot"></span> Career
-      </a>
-      <a class="nav-item" href="#side">
-        <span class="nav-dot"></span> Side Project
-      </a>
-      <a class="nav-item" href="#contact">
-        <span class="nav-dot"></span> Contact
-      </a>
+      <a class="nav-item active" href="#about"><span class="nav-dot"></span> About Me</a>
+      <a class="nav-item" href="#skills"><span class="nav-dot"></span> Skills</a>
+      <a class="nav-item" href="#career"><span class="nav-dot"></span> Career</a>
+      <a class="nav-item" href="#side"><span class="nav-dot"></span> Side Project</a>
+      <a class="nav-item" href="#contact"><span class="nav-dot"></span> Contact</a>
     </nav>
 
     <div class="sidebar-bottom">
@@ -596,7 +536,7 @@ a { color: inherit; text-decoration: none; }
   <main class="main">
 
     <!-- HERO -->
-    <div class="hero" id="top">
+    <div class="hero">
       <span class="hero-emoji">👋</span>
       <h1 class="hero-name">안녕하세요,<br><span>정윤서</span>입니다.</h1>
       <p class="hero-sub">Backend Developer · 2024.05 ~ 2026.04</p>
@@ -606,7 +546,6 @@ a { color: inherit; text-decoration: none; }
       </p>
       <div class="hero-badges">
         <span class="badge"><span class="badge-dot"></span> 재직 중 · 엔소프트웨어</span>
-
       </div>
     </div>
 
@@ -616,7 +555,6 @@ a { color: inherit; text-decoration: none; }
         <span class="section-icon">🙋</span>
         <span class="section-title">About Me</span>
       </div>
-
       <p class="about-text">
         Java, Spring Boot 기반 웹 서비스의 기존 기능 고도화 및 신규 기능 개발을 담당해왔습니다.
         공공기관 파견 프로젝트에서 외부 API 연동, 데이터 처리 로직 개선, 게시판 및 보고서 시스템 고도화 경험을 쌓았으며,
@@ -626,7 +564,6 @@ a { color: inherit; text-decoration: none; }
         GitLab, Jenkins 기반 CI/CD 환경에서 백엔드 서비스 개발·운영을 경험하며 실서비스 안정성 개선에 기여했습니다.
         단순히 동작하는 코드가 아닌, <strong>구조와 흐름을 먼저 고민하는 개발자</strong>를 지향합니다.
       </p>
-
       <div class="stat-grid">
         <div class="stat-card">
           <div class="stat-val">97.5<span>%</span></div>
@@ -649,7 +586,6 @@ a { color: inherit; text-decoration: none; }
         <span class="section-icon">🛠</span>
         <span class="section-title">Skills</span>
       </div>
-
       <div class="skill-group">
         <div class="skill-group-label">주력 기술</div>
         <div class="skill-chips">
@@ -661,7 +597,6 @@ a { color: inherit; text-decoration: none; }
           <span class="chip chip-primary">GitLab</span>
         </div>
       </div>
-
       <div class="skill-group">
         <div class="skill-group-label">실무 경험</div>
         <div class="skill-chips">
@@ -675,7 +610,6 @@ a { color: inherit; text-decoration: none; }
           <span class="chip chip-secondary">Tomcat / WebLogic</span>
         </div>
       </div>
-
       <div class="skill-group">
         <div class="skill-group-label">학습 중</div>
         <div class="skill-chips">
@@ -691,13 +625,11 @@ a { color: inherit; text-decoration: none; }
         <span class="section-icon">💼</span>
         <span class="section-title">Career</span>
       </div>
-
       <div class="career-intro">
         SI 환경에서 공공기관 고도화 · 보고서 시스템 · 사내 공통 코드 개발까지 다양한 프로젝트를 담당했습니다.<br>
         쿼리 구조 재설계 · 배포 자동화 · 외부 API 연동 예외처리를 직접 구현하며 서비스 품질을 높여왔습니다.
       </div>
 
-      <!-- 프로젝트 1 -->
       <div class="project-card">
         <div class="proj-top">
           <div class="proj-title">공공기관 내부 시스템 고도화</div>
@@ -721,7 +653,6 @@ a { color: inherit; text-decoration: none; }
         </ul>
       </div>
 
-      <!-- 프로젝트 2 -->
       <div class="project-card">
         <div class="proj-top">
           <div class="proj-title">보고서 작성 시스템 고도화</div>
@@ -738,7 +669,6 @@ a { color: inherit; text-decoration: none; }
         </ul>
       </div>
 
-      <!-- 프로젝트 3 -->
       <div class="project-card">
         <div class="proj-top">
           <div class="proj-title">사내 내부 기능 개선 및 공통 코드 기반 개발</div>
@@ -762,7 +692,6 @@ a { color: inherit; text-decoration: none; }
         <span class="section-icon">🚀</span>
         <span class="section-title">Side Project</span>
       </div>
-
       <div class="side-card">
         <div class="side-top">
           <div class="side-title">DOC BRIEF</div>
@@ -787,13 +716,12 @@ a { color: inherit; text-decoration: none; }
         <span class="section-icon">✉️</span>
         <span class="section-title">Contact</span>
       </div>
-
       <div class="contact-grid">
         <div class="contact-item">
           <div class="contact-icon">📧</div>
           <div>
             <span class="contact-label">Email</span>
-            <span class="contact-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3bcbcbcbc8ce3e4e1e393bdb2a5b6a1fdb0bcbe">[email&#160;protected]</a></span>
+            <span class="contact-val">oooo_0720@naver.com</span>
           </div>
         </div>
         <div class="contact-item">
@@ -827,20 +755,20 @@ a { color: inherit; text-decoration: none; }
   </main>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// 스크롤 IntersectionObserver - 섹션 페이드인
-const sections = document.querySelectorAll('.section');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-sections.forEach(s => observer.observe(s));
-
+<script>
 // 네비게이션 활성화
 const navItems = document.querySelectorAll('.nav-item');
-const sectionEls = document.querySelectorAll('section[id], .hero');
-
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      const id = entry.target.id || 'top';
-      navItems.forEach(n =>
+      const id = entry.target.id;
+      navItems.forEach(n => {
+        n.classList.toggle('active', n.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
