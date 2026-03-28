@@ -96,11 +96,83 @@ a { color: inherit; text-decoration: none; }
 .chip-secondary { background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--border); }
 .chip-learning { background: #fff; color: var(--text3); border: 1.5px dashed var(--border); }
 
-/* PROJECT CARD */
-.project-card { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: box-shadow 0.2s, border-color 0.2s; }
-.project-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-color: #D0D0CE; }
+/* ─────────────────────────────────────────────
+   PROJECT CARD — hover overlay 포함 전체 재작성
+───────────────────────────────────────────── */
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.22s, border-color 0.22s;
+  position: relative; /* overlay 기준점 */
+}
+.project-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border-color: #D0D0CE;
+}
 
-.proj-header { padding: 22px 26px; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; }
+/* ── hover overlay — 카드 전체를 덮는 레이어 ── */
+.proj-hover-overlay {
+  position: absolute;
+  inset: 0;                          /* 카드 전체 커버 */
+  border-radius: 10px;
+  background: rgba(245, 245, 243, 0.82);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  z-index: 10;
+}
+.project-card:not(.open):hover .proj-hover-overlay {
+  opacity: 1;
+  pointer-events: none;
+}
+.project-card.open .proj-hover-overlay {
+  display: none;
+}
+
+.proj-overlay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background: var(--text);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--mono);
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+  transform: scale(0.96);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  pointer-events: none;
+  user-select: none;
+}
+.project-card:not(.open):hover .proj-overlay-btn {
+  transform: scale(1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+.proj-overlay-btn svg {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.proj-header {
+  padding: 22px 26px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  user-select: none;
+  transition: background 0.15s;
+}
 .proj-header:hover { background: var(--bg2); }
 .proj-left { flex: 1; }
 .proj-title { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.3; margin-bottom: 5px; }
@@ -110,8 +182,22 @@ a { color: inherit; text-decoration: none; }
 .proj-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
 .proj-period { font-size: 12px; color: var(--text3); font-family: var(--mono); }
 .proj-tag { font-size: 11px; font-weight: 700; color: var(--accent); font-family: var(--mono); }
-.proj-toggle { font-size: 11px; color: var(--text3); margin-top: 6px; transition: transform 0.25s; display: block; }
-.project-card.open .proj-toggle { transform: rotate(180deg); }
+
+/* 기존 텍스트 토글 화살표 → 아이콘으로 업그레이드 */
+.proj-toggle-icon {
+  margin-top: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.25s;
+  flex-shrink: 0;
+}
+.project-card.open .proj-toggle-icon { transform: rotate(180deg); background: var(--bg3); }
 
 .proj-detail { max-height: 0; overflow: hidden; transition: max-height 0.45s ease; }
 .project-card.open .proj-detail { max-height: 5000px; border-top: 1px solid var(--border); }
@@ -208,7 +294,8 @@ a { color: inherit; text-decoration: none; }
   <main class="main">
 
     <div class="hero">
-      <h1 class="hero-name"><span class="hero-emoji">👋</span>&nbsp;&nbsp;&nbsp;&nbsp;안녕하세요,<br><br><span>정윤서</span>입니다.</h1>
+      <span class="hero-emoji">👋</span>
+      <h1 class="hero-name">안녕하세요,<br><span>정윤서</span>입니다.</h1>
       <p class="hero-sub">Backend Developer · 2024.05 ~ 2026.04</p>
       <p class="hero-desc">
         사용하는 사람과 관리하는 사람 모두에게 편한 개발을 지향하는 2년차 개발자입니다.<br>
@@ -265,6 +352,15 @@ a { color: inherit; text-decoration: none; }
 
       <!-- 프로젝트 1 -->
       <div class="project-card" id="proj1">
+        <!-- hover overlay -->
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            상세 보기
+          </div>
+        </div>
         <div class="proj-header" onclick="toggleCard('proj1')">
           <div class="proj-left">
             <div class="proj-title">공공기관 내부 시스템 고도화</div>
@@ -278,7 +374,11 @@ a { color: inherit; text-decoration: none; }
           <div class="proj-right">
             <span class="proj-period">2025.01 ~ 현재</span>
             <span class="proj-tag">고객사 파견</span>
-            <span class="proj-toggle">▾ 상세 보기</span>
+            <div class="proj-toggle-icon" aria-label="상세 보기 토글">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
           </div>
         </div>
         <div class="proj-detail">
@@ -422,6 +522,14 @@ a { color: inherit; text-decoration: none; }
 
       <!-- 프로젝트 2 -->
       <div class="project-card" id="proj2">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+              <path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            상세 보기
+          </div>
+        </div>
         <div class="proj-header" onclick="toggleCard('proj2')">
           <div class="proj-left">
             <div class="proj-title">보고서 작성 시스템 고도화</div>
@@ -430,7 +538,11 @@ a { color: inherit; text-decoration: none; }
           <div class="proj-right">
             <span class="proj-period">2024.08 ~ 2024.11</span>
             <span class="proj-tag">고객사 파견</span>
-            <span class="proj-toggle">▾ 상세 보기</span>
+            <div class="proj-toggle-icon" aria-label="상세 보기 토글">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
           </div>
         </div>
         <div class="proj-detail">
@@ -465,6 +577,14 @@ a { color: inherit; text-decoration: none; }
 
       <!-- 프로젝트 3 -->
       <div class="project-card" id="proj3">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+              <path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            상세 보기
+          </div>
+        </div>
         <div class="proj-header" onclick="toggleCard('proj3')">
           <div class="proj-left">
             <div class="proj-title">사내 공통 프레임워크 개발</div>
@@ -473,7 +593,11 @@ a { color: inherit; text-decoration: none; }
           <div class="proj-right">
             <span class="proj-period">2024.05 ~ 현재</span>
             <span class="proj-tag">사내 프로젝트 · 4인+</span>
-            <span class="proj-toggle">▾ 상세 보기</span>
+            <div class="proj-toggle-icon" aria-label="상세 보기 토글">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
           </div>
         </div>
         <div class="proj-detail">
@@ -571,6 +695,7 @@ function toggleCard(id) {
   document.getElementById(id).classList.toggle('open');
 }
 
+/* section fade-in */
 const sections = document.querySelectorAll('.section');
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -579,6 +704,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 sections.forEach(s => fadeObserver.observe(s));
 
+/* nav active highlight */
 const navItems = document.querySelectorAll('.nav-item');
 let navReady = false;
 setTimeout(() => { navReady = true; }, 600);
