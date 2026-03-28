@@ -777,9 +777,13 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 sections.forEach(s => fadeObserver.observe(s));
 
-// 네비게이션 활성화
+// 네비게이션 활성화 (초기 로드 시 자동 스크롤 방지)
 const navItems = document.querySelectorAll('.nav-item');
+let navReady = false;
+setTimeout(() => { navReady = true; }, 600);
+
 const navObserver = new IntersectionObserver((entries) => {
+  if (!navReady) return;
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const id = entry.target.id;
