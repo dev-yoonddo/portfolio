@@ -1,160 +1,846 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>포트폴리오 | 문서 요약 서비스</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정윤서 · Backend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-      margin: 0;
-      background: #fafafa;
-      color: #222;
-      line-height: 1.6;
-    }
+:root {
+  --bg:        #FFFFFF;
+  --bg2:       #F7F7F5;
+  --bg3:       #EFEFED;
+  --border:    #E5E5E3;
+  --text:      #1A1A1A;
+  --text2:     #555550;
+  --text3:     #9B9B97;
+  --accent:    #2F6FED;
+  --accent-bg: #EEF3FD;
+  --tag-bg:    #F0F0EE;
+  --tag-text:  #37352F;
+  --mono:      'DM Mono', monospace;
+  --sans:      'Noto Sans KR', sans-serif;
+  --max:       760px;
+  --side:      240px;
+}
 
-    header {
-      padding: 60px 20px;
-      text-align: center;
-      background: white;
-      border-bottom: 1px solid #eee;
-    }
+html { scroll-behavior: smooth; }
 
-    h1 {
-      margin: 0;
-      font-size: 32px;
-    }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
 
-    .subtitle {
-      color: #666;
-      margin-top: 10px;
-    }
+a { color: inherit; text-decoration: none; }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-    }
+/* ══════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
 
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
+/* ── 사이드바 ── */
+.sidebar {
+  width: var(--side);
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  padding: 40px 20px 40px 28px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  z-index: 100;
+  overflow-y: auto;
+}
 
-    h2 {
-      margin-top: 0;
-    }
+.sidebar-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+  letter-spacing: -0.3px;
+}
+.sidebar-role {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+  margin-bottom: 28px;
+}
 
-    .tag {
-      display: inline-block;
-      background: #eee;
-      padding: 5px 10px;
-      border-radius: 8px;
-      margin-right: 5px;
-      font-size: 12px;
-    }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 13.5px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-weight: 500;
+}
+.nav-item:hover, .nav-item.active {
+  background: var(--bg2);
+  color: var(--text);
+}
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.nav-item.active .nav-dot { background: var(--accent); }
 
-    a {
-      color: #007aff;
-      text-decoration: none;
-    }
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text3);
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+.sidebar-link:hover { color: var(--text); }
+.sidebar-link svg { flex-shrink: 0; }
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #999;
-      font-size: 14px;
-    }
-  </style>
+/* ── 메인 콘텐츠 ── */
+.main {
+  margin-left: var(--side);
+  flex: 1;
+  max-width: 900px;
+  padding: 80px 72px 120px 72px;
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 64px;
+}
+
+.hero-emoji {
+  font-size: 52px;
+  line-height: 1;
+  margin-bottom: 20px;
+  display: block;
+  animation: wave 2.5s ease-in-out infinite;
+  transform-origin: 70% 70%;
+  width: fit-content;
+}
+@keyframes wave {
+  0%,60%,100% { transform: rotate(0deg); }
+  10%,30% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.hero-name {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.hero-name span {
+  color: var(--accent);
+}
+.hero-sub {
+  font-size: 16px;
+  color: var(--text2);
+  font-weight: 400;
+  margin-bottom: 24px;
+  font-family: var(--mono);
+}
+.hero-desc {
+  font-size: 15.5px;
+  color: var(--text2);
+  line-height: 1.85;
+  max-width: 580px;
+}
+.hero-desc strong { color: var(--text); font-weight: 700; }
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-family: var(--mono);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 10px;
+  color: var(--text2);
+  font-weight: 500;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #4CAF50;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
+   SECTION
+══════════════════════════════════════ */
+.section {
+  margin-bottom: 64px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.section.visible { opacity: 1; transform: none; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.section-icon {
+  font-size: 18px;
+  width: 32px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text3);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-family: var(--mono);
+}
+
+/* ══════════════════════════════════════
+   ABOUT ME
+══════════════════════════════════════ */
+.about-text {
+  font-size: 15.5px;
+  color: var(--text2);
+  line-height: 1.9;
+}
+.about-text strong { color: var(--text); font-weight: 700; }
+.about-text + .about-text { margin-top: 14px; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.stat-val {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -1px;
+  line-height: 1;
+  font-family: var(--mono);
+}
+.stat-val span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  margin-left: 2px;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 5px;
+}
+
+/* ══════════════════════════════════════
+   SKILLS
+══════════════════════════════════════ */
+.skill-group { margin-bottom: 22px; }
+.skill-group:last-child { margin-bottom: 0; }
+
+.skill-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: var(--mono);
+  margin-bottom: 10px;
+}
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.chip {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-family: var(--mono);
+  transition: transform 0.15s;
+  cursor: default;
+}
+.chip:hover { transform: translateY(-1px); }
+.chip-primary {
+  background: var(--text);
+  color: #fff;
+}
+.chip-secondary {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--border);
+}
+.chip-learning {
+  background: #fff;
+  color: var(--text3);
+  border: 1.5px dashed var(--border);
+}
+
+/* ══════════════════════════════════════
+   CAREER
+══════════════════════════════════════ */
+.career-intro {
+  font-size: 14.5px;
+  color: var(--text2);
+  line-height: 1.85;
+  padding: 18px 20px;
+  background: var(--bg2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 32px;
+}
+
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 26px;
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  background: var(--bg);
+}
+.project-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border-color: #D0D0CE;
+}
+
+.proj-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  gap: 12px;
+}
+.proj-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  line-height: 1.3;
+}
+.proj-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.proj-period {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+.proj-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: var(--mono);
+}
+
+.proj-stack {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+  margin-bottom: 14px;
+}
+
+.proj-kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+.kpi {
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--mono);
+  background: var(--text);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.proj-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.proj-list li {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.65;
+  padding-left: 16px;
+  position: relative;
+}
+.proj-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--border);
+}
+.proj-list li strong { color: var(--text); font-weight: 700; }
+
+/* ══════════════════════════════════════
+   SIDE PROJECT
+══════════════════════════════════════ */
+.side-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 26px;
+  background: var(--bg);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.side-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border-color: #D0D0CE;
+}
+.side-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+.side-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.side-links {
+  display: flex;
+  gap: 10px;
+}
+.side-link {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--accent);
+  padding: 3px 9px;
+  border: 1px solid var(--accent-bg);
+  border-radius: 4px;
+  background: var(--accent-bg);
+  transition: background 0.15s;
+}
+.side-link:hover { background: #dde8fb; }
+.side-sub {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+  margin-bottom: 14px;
+}
+
+/* ══════════════════════════════════════
+   CONTACT
+══════════════════════════════════════ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  transition: background 0.15s, border-color 0.15s;
+  cursor: default;
+}
+.contact-item:hover {
+  background: var(--bg2);
+  border-color: #D0D0CE;
+}
+.contact-icon {
+  width: 32px; height: 32px;
+  background: var(--bg2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.contact-label {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+  font-weight: 500;
+  display: block;
+}
+.contact-val {
+  font-size: 13.5px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+.footer {
+  margin-top: 80px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 48px 24px 80px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .hero-name { font-size: 32px; }
+}
+</style>
 </head>
-
 <body>
 
-<header>
-  <h1>문서 요약 서비스를 만든 개발자</h1>
-  <div class="subtitle">
-    긴 텍스트를 빠르게 핵심만 파악할 수 있도록 도와주는 서비스 개발
-  </div>
-</header>
+<div class="layout">
 
-<div class="container">
+  <!-- ── 사이드바 ── -->
+  <aside class="sidebar">
+    <div class="sidebar-name">정윤서</div>
+    <div class="sidebar-role">Backend Developer</div>
 
-  <!-- 프로젝트 요약 -->
-  <div class="card">
-    <h2>📌 대표 프로젝트 - 문서 요약 서비스</h2>
+    <nav class="nav">
+      <a class="nav-item active" href="#about">
+        <span class="nav-dot"></span> About Me
+      </a>
+      <a class="nav-item" href="#skills">
+        <span class="nav-dot"></span> Skills
+      </a>
+      <a class="nav-item" href="#career">
+        <span class="nav-dot"></span> Career
+      </a>
+      <a class="nav-item" href="#side">
+        <span class="nav-dot"></span> Side Project
+      </a>
+      <a class="nav-item" href="#contact">
+        <span class="nav-dot"></span> Contact
+      </a>
+    </nav>
 
-    <p>
-      사용자가 입력한 긴 텍스트를 분석하여 핵심 내용을 요약해주는 웹 서비스입니다.
-    </p>
+    <div class="sidebar-bottom">
+      <a class="sidebar-link" href="https://github.com/dev-yoonddo" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        github.com/dev-yoonddo
+      </a>
+      <a class="sidebar-link" href="https://velog.io/@yoonddo" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm5 3a1 1 0 000 2h8a1 1 0 100-2H8zm0 4a1 1 0 000 2h5a1 1 0 100-2H8z"/></svg>
+        velog.io/@yoonddo
+      </a>
+    </div>
+  </aside>
 
-    <div>
-      <span class="tag">Java</span>
-      <span class="tag">Spring</span>
-      <span class="tag">JavaScript</span>
+  <!-- ── 메인 ── -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero" id="top">
+      <span class="hero-emoji">👋</span>
+      <h1 class="hero-name">안녕하세요,<br><span>정윤서</span>입니다.</h1>
+      <p class="hero-sub">Backend Developer · 2024.05 ~ 2026.04</p>
+      <p class="hero-desc">
+        Java · Spring Boot 기반 SI 환경에서 공공기관 시스템 고도화와 보고서 플랫폼 개발을 담당했습니다.<br>
+        기능 구현을 넘어 <strong>쿼리 구조 재설계</strong>, <strong>배포 자동화</strong>, <strong>외부 API 연동</strong>까지 실서비스 전반을 다뤄온 백엔드 개발자입니다.
+      </p>
+      <div class="hero-badges">
+        <span class="badge"><span class="badge-dot"></span> 재직 중 · 엔소프트웨어</span>
+
+      </div>
     </div>
 
-    <p style="margin-top:10px;">
-      🔗 GitHub:
-      <a href="https://github.com/your-repo" target="_blank">
-        https://github.com/your-repo
-      </a>
-    </p>
-  </div>
+    <!-- ABOUT ME -->
+    <section class="section" id="about">
+      <div class="section-header">
+        <span class="section-icon">🙋</span>
+        <span class="section-title">About Me</span>
+      </div>
 
-  <!-- 문제 정의 -->
-  <div class="card">
-    <h2>🧩 문제 정의</h2>
-    <p>
-      긴 문서를 읽는 데 시간이 많이 소요되고, 핵심 내용을 빠르게 파악하기 어렵다는 문제를 해결하고자 서비스를 개발했습니다.
-    </p>
-  </div>
+      <p class="about-text">
+        Java, Spring Boot 기반 웹 서비스의 기존 기능 고도화 및 신규 기능 개발을 담당해왔습니다.
+        공공기관 파견 프로젝트에서 외부 API 연동, 데이터 처리 로직 개선, 게시판 및 보고서 시스템 고도화 경험을 쌓았으며,
+        <strong>쿼리 튜닝과 구조 개선</strong>을 통해 성능 병목을 해결하고 <strong>Jenkins 기반 배포 자동화</strong>로 운영 효율성과 안정성을 향상시켰습니다.
+      </p>
+      <p class="about-text">
+        GitLab, Jenkins 기반 CI/CD 환경에서 백엔드 서비스 개발·운영을 경험하며 실서비스 안정성 개선에 기여했습니다.
+        단순히 동작하는 코드가 아닌, <strong>구조와 흐름을 먼저 고민하는 개발자</strong>를 지향합니다.
+      </p>
 
-  <!-- 기능 -->
-  <div class="card">
-    <h2>⚙️ 주요 기능</h2>
-    <ul>
-      <li>텍스트 입력 후 자동 요약</li>
-      <li>핵심 키워드 추출</li>
-      <li>요약 결과 출력</li>
-    </ul>
-  </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-val">97.5<span>%</span></div>
+          <div class="stat-label">쿼리 응답 단축<br>40초 → 1초</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">80<span>%</span></div>
+          <div class="stat-label">배포 시간 단축<br>10분 → 2분</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">4<span>개</span></div>
+          <div class="stat-label">운영망 자동화<br>Jenkins 파이프라인</div>
+        </div>
+      </div>
+    </section>
 
-  <!-- 기술 포인트 -->
-  <div class="card">
-    <h2>🧠 기술적 구현</h2>
-    <ul>
-      <li>요청 → 처리 → 응답 구조의 API 설계</li>
-      <li>텍스트 처리 로직을 별도 서비스 레이어로 분리</li>
-      <li>대량 텍스트 처리 시 성능 고려</li>
-    </ul>
-  </div>
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="section-header">
+        <span class="section-icon">🛠</span>
+        <span class="section-title">Skills</span>
+      </div>
 
-  <!-- 문제 해결 -->
-  <div class="card">
-    <h2>🚧 문제 해결 경험</h2>
-    <ul>
-      <li>긴 텍스트 입력 시 처리 속도 지연 문제 → 처리 로직 개선</li>
-      <li>요약 결과 품질 개선을 위한 알고리즘 보완</li>
-    </ul>
-  </div>
+      <div class="skill-group">
+        <div class="skill-group-label">주력 기술</div>
+        <div class="skill-chips">
+          <span class="chip chip-primary">Java</span>
+          <span class="chip chip-primary">Spring Boot</span>
+          <span class="chip chip-primary">MyBatis</span>
+          <span class="chip chip-primary">Oracle</span>
+          <span class="chip chip-primary">Jenkins</span>
+          <span class="chip chip-primary">GitLab</span>
+        </div>
+      </div>
 
-  <!-- About -->
-  <div class="card">
-    <h2>👨‍💻 About Me</h2>
-    <p>
-      문제를 해결하는 과정에서 구조를 고민하고, 더 나은 방법을 찾는 개발자입니다.
-    </p>
-  </div>
+      <div class="skill-group">
+        <div class="skill-group-label">실무 경험</div>
+        <div class="skill-chips">
+          <span class="chip chip-secondary">JPA</span>
+          <span class="chip chip-secondary">MySQL</span>
+          <span class="chip chip-secondary">AWS EC2/RDS</span>
+          <span class="chip chip-secondary">Thymeleaf</span>
+          <span class="chip chip-secondary">JavaScript</span>
+          <span class="chip chip-secondary">jQuery</span>
+          <span class="chip chip-secondary">Linux</span>
+          <span class="chip chip-secondary">Tomcat / WebLogic</span>
+        </div>
+      </div>
 
+      <div class="skill-group">
+        <div class="skill-group-label">학습 중</div>
+        <div class="skill-chips">
+          <span class="chip chip-learning">JPA (CRUD · 연관관계 매핑)</span>
+          <span class="chip chip-learning">Vue.js (화면 구성 · API 연동)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAREER -->
+    <section class="section" id="career">
+      <div class="section-header">
+        <span class="section-icon">💼</span>
+        <span class="section-title">Career</span>
+      </div>
+
+      <div class="career-intro">
+        SI 환경에서 공공기관 고도화 · 보고서 시스템 · 사내 공통 코드 개발까지 다양한 프로젝트를 담당했습니다.<br>
+        쿼리 구조 재설계 · 배포 자동화 · 외부 API 연동 예외처리를 직접 구현하며 서비스 품질을 높여왔습니다.
+      </div>
+
+      <!-- 프로젝트 1 -->
+      <div class="project-card">
+        <div class="proj-top">
+          <div class="proj-title">공공기관 내부 시스템 고도화</div>
+          <div class="proj-meta">
+            <span class="proj-period">2025.01 ~ 현재</span>
+            <span class="proj-tag">고객사 파견</span>
+          </div>
+        </div>
+        <div class="proj-stack">Java · Spring Boot · MyBatis · Oracle · JavaScript · Jenkins</div>
+        <div class="proj-kpis">
+          <span class="kpi">응답 40초 → 1초</span>
+          <span class="kpi">배포 10분 → 2분</span>
+          <span class="kpi">운영망 4개 자동화</span>
+        </div>
+        <ul class="proj-list">
+          <li>게시물 항목을 타입별(TEXT/NUM/DATE/CLOB) <strong>4개 테이블로 분리</strong>, 고정 행 조회 구조 전환 · Thymeleaf 동적 렌더링 적용</li>
+          <li>평가 데이터 <strong>N+1 쿼리 → 리스트 일괄 조회 + Java 매핑</strong> 재설계, 인덱스 최적화로 응답 40초 → 1초 단축</li>
+          <li>총점 계산 로직 View 레이어 의존 제거 → <strong>연도별 계산식 클래스 분리</strong>, 관심사 분리 및 연도별 독립 확장</li>
+          <li><strong>Jenkins 파이프라인 + 쉘 스크립트</strong>로 4개 운영망 배포 자동화, 수동 10분 → 자동 2분으로 단축</li>
+          <li>외부 API 연동: Timeout · 응답 오류(4xx/5xx) · 데이터 누락 예외 유형별 분기 처리 구현</li>
+        </ul>
+      </div>
+
+      <!-- 프로젝트 2 -->
+      <div class="project-card">
+        <div class="proj-top">
+          <div class="proj-title">보고서 작성 시스템 고도화</div>
+          <div class="proj-meta">
+            <span class="proj-period">2024.08 ~ 2024.11</span>
+            <span class="proj-tag">고객사 파견</span>
+          </div>
+        </div>
+        <div class="proj-stack">Java · Spring Boot · MyBatis · Oracle</div>
+        <ul class="proj-list">
+          <li>타 기관 내부 시스템 API 연동 기반 <strong>실시간 보고서 작성·공유 기능 신규 개발</strong></li>
+          <li>Timeout · 응답 오류 · 데이터 누락 예외 유형별 처리 패턴 적용, 안정적 연동 구현</li>
+          <li>시스템 간 데이터 전달 구조 재설계로 사용자 작업 흐름 및 서비스 안정성 향상</li>
+        </ul>
+      </div>
+
+      <!-- 프로젝트 3 -->
+      <div class="project-card">
+        <div class="proj-top">
+          <div class="proj-title">사내 내부 기능 개선 및 공통 코드 기반 개발</div>
+          <div class="proj-meta">
+            <span class="proj-period">2024.05 ~ 2024.08</span>
+            <span class="proj-tag">사내 프로젝트</span>
+          </div>
+        </div>
+        <div class="proj-stack">Java · Spring Boot · MyBatis · Oracle</div>
+        <ul class="proj-list">
+          <li>사내 공통 코드 구조 분석을 통해 데이터 흐름 및 JSON 처리 방식 이해</li>
+          <li>기존 기능의 성능 개선 및 신규 기능 추가를 수행하며 코드 품질 개선</li>
+          <li>이후 파견 프로젝트에 빠르게 적응할 수 있도록 공통 구조 이해 기반 마련</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SIDE PROJECT -->
+    <section class="section" id="side">
+      <div class="section-header">
+        <span class="section-icon">🚀</span>
+        <span class="section-title">Side Project</span>
+      </div>
+
+      <div class="side-card">
+        <div class="side-top">
+          <div class="side-title">DOC BRIEF</div>
+          <div class="side-links">
+            <a class="side-link" href="https://github.com/dev-yoonddo/docbrief_api" target="_blank">GitHub →</a>
+            <a class="side-link" href="https://www.notion.so/DOC-BRIEF-2f6fe1a4a18781a1975dccb8a73ead60" target="_blank">기획서 →</a>
+          </div>
+        </div>
+        <div class="side-sub">Spring Boot · JPA · PostgreSQL · Vue 3 · OpenAI · Gemini · 2인 팀 · 2026.01</div>
+        <ul class="proj-list">
+          <li>문서를 업로드하면 AI가 자동으로 요약·키워드를 추출해주는 문서 요약 서비스</li>
+          <li>Gemini / OpenAI 다중 LLM 연동, <strong>Rate Limit 발생 시 자동 Fallback</strong> 처리 (Gemini → OpenAI 전환)</li>
+          <li>ErrorCode 기반 공통 예외 처리 구조 설계 — 사용자 노출 메시지 / 내부 오류 코드 분리</li>
+          <li>문서 파싱 → AI 요약 → 결과 반환 파이프라인 설계, 키워드 하이라이트 렌더링 구현</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-header">
+        <span class="section-icon">✉️</span>
+        <span class="section-title">Contact</span>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <span class="contact-label">Email</span>
+            <span class="contact-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3bcbcbcbc8ce3e4e1e393bdb2a5b6a1fdb0bcbe">[email&#160;protected]</a></span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <span class="contact-label">Phone</span>
+            <span class="contact-val">010-2941-9228</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🐙</div>
+          <div>
+            <span class="contact-label">GitHub</span>
+            <span class="contact-val">github.com/dev-yoonddo</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✍️</div>
+          <div>
+            <span class="contact-label">Blog</span>
+            <span class="contact-val">velog.io/@yoonddo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2026 Jeong Yoon-Seo · Built with GitHub Pages
+    </footer>
+
+  </main>
 </div>
 
-<footer>
-  © 2026 Portfolio
-</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// 스크롤 IntersectionObserver - 섹션 페이드인
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+sections.forEach(s => observer.observe(s));
 
-</body>
-</html>
+// 네비게이션 활성화
+const navItems = document.querySelectorAll('.nav-item');
+const sectionEls = document.querySelectorAll('section[id], .hero');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id || 'top';
+      navItems.forEach(n =>
